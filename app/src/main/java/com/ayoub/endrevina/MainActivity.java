@@ -1,10 +1,12 @@
 package com.ayoub.endrevina;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -33,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
         random = new Random();
         numeroAEndevinar = generarNumeroAleatori();
         intents = 0;
+        inputEditText = findViewById(R.id.inputNumero);
+        historialTextView = findViewById(R.id.historial);
+        intentsTextView = findViewById(R.id.intents);
+        Button btnValidar = findViewById(R.id.btnValidar);
+        btnValidar.setOnClickListener(v -> validarNumero());
     }
 
 
@@ -62,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void reiniciarPartida() {
-        numeroAEndevinar = generarNumeroAleatori();
-        intents = 0;
-        historialTextView.setText("");
-        intentsTextView.setText("Intents: " + intents);
+    private void mostrarFiDePartida() {
+        new AlertDialog.Builder(this)
+                .setTitle("Felicitats!")
+                .setMessage("Has endevinat el número en " + intents + " intents.")
+                .show();
     }
 
     private void actualitzarHistorial(int numeroIntrodut) {
