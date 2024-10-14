@@ -28,6 +28,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <Button
+        android:id="@+id/btnHallOfFame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hall of Fame"
+        app:layout_constraintTop_toBottomOf="@id/inputNumero"
+
+        />
+
     <TextView
         android:id="@+id/intents"
         android:layout_width="wrap_content"

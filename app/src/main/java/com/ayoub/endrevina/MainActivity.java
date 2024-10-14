@@ -1,5 +1,6 @@
 package com.ayoub.endrevina;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,8 +22,12 @@ public class MainActivity extends AppCompatActivity {
     private int intents;
     private TextView historialTextView;
     private EditText inputEditText;
-    private TextView intentsTextView;
+    private TextVi
+
+            i
+        ntentsTextView;
     private Random random;
+    private List<String> intentsGuardats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +39,20 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         random = new Random();
         numeroAEndevinar = generarNumeroAleatori();
         intents = 0;
+        intentsGuardats = new ArrayList<>();
         inputEditText = findViewById(R.id.inputNumero);
         historialTextView = findViewById(R.id.historial);
         intentsTextView = findViewById(R.id.intents);
         Button btnValidar = findViewById(R.id.btnValidar);
-        btnValidar.setOnClickListener(v -> validarNumero());
-    }
+        Button btnHallOfFame = findViewById(R.id.btnHallOfFame);
 
+        btnValidar.setOnClickListener(v -> validarNumero());
+        btnHallOfFame.setOnClickListener(v -> obrirAlHallOfFame());
+    }
 
     private int generarNumeroAleatori() {
         return random.nextInt(100) + 1;
@@ -70,15 +81,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mostrarFiDePartida() {
-        new AlertDialog.Builder(this)
-                .setTitle("Felicitats!")
-                .setMessage("Has endevinat el número en " + intents + " intents.")
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Felicitats!")
+                .setMessage("Has endevinat el número en " + intents + " intents.\nVols guardar l'intent?")
+                .setPositiveButton("Sí", (dialog, which) -> preguntarNomJugador())
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                 .show();
     }
+
+    private void preguntarNomJugador() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final EditText inputNom = new EditText(this);
+        inputNom.setHint("Introdueix el teu nom");
+
+        builder.setTitle("Guardar Intent")
+                .setMessage("Escriu el teu nom per guardar l'intent:")
+                .setView(inputNom)
+                .setPositiveButton("Guardar", (dialog, which) -> {
+                    String nomJugador = inputNom.getText().toString();
+                    if (!nomJugador.isEmpty()) {
+                        intentsGuardats.add(nomJugador + " - " + intents + " intents");
+                        mostrarOpcioHallOfFame();
+                    } else {
+                        Toast.makeText(this, "Introdueix un nom per guardar l'intent.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Cancel·lar", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+    private void mostrarOpcioHallOfFame() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Vols anar al Hall of Fame?")
+            .setPositiveButton("Sí", (dialog, which) -> obrirAlHallOfFame())
+            .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+            .show();
+}
 
     private void actualitzarHistorial(int numeroIntrodut) {
         String textHistorial = historialTextView.getText().toString();
         textHistorial += "Intent " + intents + ": " + numeroIntrodut + "\n";
         historialTextView.setText(textHistorial);
     }
+
+    private void obrirAlHallOfFame() {
+        Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+//        intent.putExtra("intentsGuardats", intentsGuardats);
+        startActivity(intent);
+    }
+
 }
+
+
+
+
