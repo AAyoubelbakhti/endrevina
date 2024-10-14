@@ -22,12 +22,9 @@ public class MainActivity extends AppCompatActivity {
     private int intents;
     private TextView historialTextView;
     private EditText inputEditText;
-    private TextVi
-
-            i
-        ntentsTextView;
+    private TextView intentsTextView;
     private Random random;
-    private List<String> intentsGuardats;
+    public static List<String> intentsGuardats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,9 +123,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void obrirAlHallOfFame() {
         Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-//        intent.putExtra("intentsGuardats", intentsGuardats);
+
         startActivity(intent);
     }
+
+
+
 
 }
 

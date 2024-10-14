@@ -7,4 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity2">
 
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp">
+
+    </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
